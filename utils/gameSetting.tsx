@@ -120,6 +120,13 @@ export const checkPut = (board: BoardState, player: Player): Boolean => {
     }
     return false;
 }
+
+export const checkPutRowCol = (board: BoardState, rowIndex: number, colIndex: number, player: Player): Boolean => {
+    if(makeBoard(board, colIndex, rowIndex, player)){
+        return true;
+    }
+    return false;
+}
 /**
  * 駒の数を黒、白ごとに数える関数
  * @param board ボード情報

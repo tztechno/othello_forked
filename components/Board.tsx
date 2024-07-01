@@ -14,9 +14,11 @@ const Board = ({board, onCellClick}: BoardProps) => {
         {board.map((row, rowIndex) =>
             row.map((cell, colIndex) => (
                 <Cell key={rowIndex*8+colIndex} value={cell} onClick={() => onCellClick(rowIndex, colIndex)} />
+
             ))
         )}
     </div>
   );
 };
 export default Board;
+
