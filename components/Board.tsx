@@ -13,7 +13,7 @@ const Board = ({board, onCellClick}: BoardProps) => {
     <div className="grid grid-cols-8 grid-rows-8 mx-auto" style={{ width: '320px', height: '320px' }}>
         {board.map((row, rowIndex) =>
             row.map((cell, colIndex) => (
-                <Cell value={cell} onClick={() => onCellClick(rowIndex, colIndex)} />
+                <Cell key={rowIndex*8+colIndex} value={cell} onClick={() => onCellClick(rowIndex, colIndex)} />
             ))
         )}
     </div>
