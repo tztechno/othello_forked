@@ -61,7 +61,7 @@ export default function Match() {
     }, [board, nowPlayer, skip, winner]);
     return(
         <div className='flex flex-col items-center'>
-            <p>二人で対戦</p>
+            <p>二人で対戦する</p>
             <Board board={board} onCellClick={cellClick}/>
             {!winner && <p>{nowPlayer}のターン</p>}
             {!winner && <p>黒：{countPiece(board).countBlack}　　白：{countPiece(board).countWhite}</p>}
