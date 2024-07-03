@@ -22,7 +22,7 @@ export default function Match() {
         const newBoard = makeBoard(board, col, row, nowPlayer);
         if(newBoard){
             setBoard(newBoard);
-            const winner = checkWinner(newBoard, skip);
+            const winner = checkWinner(newBoard);
             if(winner){
                 setWinner(winner);
             }else{
@@ -48,7 +48,7 @@ export default function Match() {
         if(!checkPut(board, nowPlayer)){
             if(skip){
                 setSkip(false);
-                const winner = checkWinner(board, skip);
+                const winner = checkWinner(board);
                 if(winner){
                     setWinner(winner);
               }
