@@ -72,7 +72,7 @@ export default function Match() {
     };
     return(
         <div className='flex flex-col items-center'>
-            <p>二人で対戦する</p>
+            <h2 className='font-bold' style={{fontSize: `25px`}}>二人で対戦する</h2>
             <Board board={board} onCellClick={cellClick}/>
             {!winner && <p>{nowPlayer}のターン</p>}
             {!winner && <p>黒：{countPiece(board).countBlack}　　白：{countPiece(board).countWhite}</p>}

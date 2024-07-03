@@ -181,7 +181,7 @@ export default function VsAI() {
     };
     return(
         <div className='flex flex-col items-center'>
-            <p>AIと対戦する</p>
+            <h2 className='font-bold' style={{fontSize: `25px`}}>AIと対戦する</h2>
             <Board board={board} onCellClick={cellClick}/>
             {!winner && <p>{playingPlayer}のターン</p>}
             {!winner && <p>黒：{countPiece(board).countBlack}　　白：{countPiece(board).countWhite}</p>}
