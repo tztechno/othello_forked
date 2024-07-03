@@ -74,11 +74,9 @@ const config = {
       },
     },
   },
-<<<<<<< HEAD
+
   //plugins: [require("tailwindcss-animate")],
-=======
-  plugins: [require("tailwindcss-animate")],
->>>>>>> 75671a0 (３回目コミット)
+
 } satisfies Config
 
 export default config
