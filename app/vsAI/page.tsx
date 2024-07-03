@@ -12,6 +12,8 @@ export default function VsAI() {
     const [player, setPlayer] = useState<Player>(initPlayer(true));
     const [AI, setAI] = useState<Player>(initAI(player));
     const [winner, setWinner] = useState<Winner>(null);
+    const [playingPlayer, setPlayingPlayer] = useState<string>('あなた');
+    const [message, setMessage] = useState<string>("");
     let playerTurn = true;
     //const [skip, setSkip] = useState<Boolean>(false);
 
@@ -29,11 +31,15 @@ export default function VsAI() {
             if(checkPut(board, player)){
                 if(newBoard){
                     setBoard(newBoard);
+                    setMessage('');
+                    setPlayingPlayer('AI');
                     playerTurn = false;
                     const winner = checkWinner(newBoard);
                     if(winner){
                         setWinner(winner);
                     }
+                }else{
+                    setMessage('そこには置けません');
                 }
             }else{
                 playerTurn = false;
@@ -150,6 +156,7 @@ export default function VsAI() {
         if(putAIBoard){
             setTimeout(() => {
                 setBoard(putAIBoard);
+                setPlayingPlayer('あなた');
                 playerTurn = true;
                 const winner = checkWinner(putAIBoard);
                 if(winner){
@@ -174,11 +181,11 @@ export default function VsAI() {
     };
     return(
         <div className='flex flex-col items-center'>
-            <p>二人で対戦</p>
+            <p>AIと対戦する</p>
             <Board board={board} onCellClick={cellClick}/>
-            {!winner && <p>{player}のターン</p>}
-
+            {!winner && <p>{playingPlayer}のターン</p>}
             {!winner && <p>黒：{countPiece(board).countBlack}　　白：{countPiece(board).countWhite}</p>}
+            <p>{message}</p>
             {winner && <WinnerAnnouncePop winner={winner} onDismiss={handleWinnerDismiss} />}
         </div>
     );

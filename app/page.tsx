@@ -16,6 +16,9 @@ export default function Home() {
         <Button variant="destructive" asChild>
             <Link href="/match">二人で対戦</Link>
         </Button>
+        <Button variant="destructive" asChild>
+            <Link href="/vsAI">AIと対戦</Link>
+        </Button>
       </div>
     );
 }
