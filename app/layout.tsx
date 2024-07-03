@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 const navItems = [
   { label: 'ホーム', href: '/'},
   { label: '二人対戦', href: '/match'},
-  //{ label: 'Contact', href: '/contact'},
+  { label: 'AI対戦', href: '/vsAI'},
 ]
 
 export default function RootLayout({

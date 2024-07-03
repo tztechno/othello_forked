@@ -23,6 +23,21 @@ export const initBoard = (): BoardState => {
     return board;
 }
 /**
+ * プレイヤーの初期化をする関数
+ * @returns player
+ */
+export const initPlayer = (advance: Boolean): Player => {
+    return advance ? 'black' : 'white';
+}
+/**
+ * AIの初期化をする関数
+ * @returns player
+ */
+export const initAI = (player: Player): Player => {
+    return player === 'black' ? 'white' : 'black';
+}
+
+/**
  * ひっくり返した後のボード情報を更新する関数
  * @param board 更新前のボード情報
  * @param col 置いたマスの横
@@ -32,6 +47,7 @@ export const initBoard = (): BoardState => {
  */
 export const makeBoard = (board: BoardState, col: number, row: number, player: Player): BoardState | null => {
     const newBoard: BoardState = board.map(row => [...row]);
+    
     if(newBoard[row][col] != null){
         return null;
     }else{
@@ -121,12 +137,23 @@ export const checkPut = (board: BoardState, player: Player): Boolean => {
     return false;
 }
 
-export const checkPutRowCol = (board: BoardState, rowIndex: number, colIndex: number, player: Player): Boolean => {
-    if(makeBoard(board, colIndex, rowIndex, player)){
+
+/**
+ * 特定のセルでおけるかどうかを判定する関数
+ * @param board 
+ * @param row 
+ * @param col 
+ * @param player 
+ * @returns 
+ */
+export const checkPutRowCol = (board: BoardState, row: number, col: number, player: Player): Boolean => {
+    if(makeBoard(board, col, row, player)){
         return true;
     }
     return false;
 }
+
+
 /**
  * 駒の数を黒、白ごとに数える関数
  * @param board ボード情報
