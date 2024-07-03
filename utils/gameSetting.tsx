@@ -20,6 +20,7 @@ export const initBoard = (): BoardState => {
     board[3][4] = 'black';
     board[4][3] = 'black';
     board[4][4] = 'white';
+
     return board;
 }
 /**
@@ -46,8 +47,8 @@ export const initAI = (player: Player): Player => {
  * @returns newBoard: ひっくり返した後のボード情報
  */
 export const makeBoard = (board: BoardState, col: number, row: number, player: Player): BoardState | null => {
-    const newBoard: BoardState = board.map(row => [...row]);
     
+    const newBoard: BoardState = board.map(row => [...row]);
     if(newBoard[row][col] != null){
         return null;
     }else{
@@ -176,9 +177,9 @@ export const countPiece = (board: BoardState): {countBlack: number, countWhite: 
  * @param skip スキップしているかどうか
  * @returns 試合結果
  */
-export const checkWinner = (board: BoardState, skip: Boolean): Winner => {
+export const checkWinner = (board: BoardState): Winner => {
     const {countBlack, countWhite} = countPiece(board);
-    if(countBlack + countWhite === 64 || countBlack === 0 || countWhite === 0 || skip){
+    if(countBlack + countWhite === 64 || countBlack === 0 || countWhite === 0 || (!checkPut(board, 'black') && !checkPut(board, 'white'))){
         if(countBlack === countWhite){
             return 'draw';
         }else if(countBlack > countWhite){
