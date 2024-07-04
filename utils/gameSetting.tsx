@@ -47,7 +47,6 @@ export const initAI = (player: Player): Player => {
  * @returns newBoard: ひっくり返した後のボード情報
  */
 export const makeBoard = (board: BoardState, col: number, row: number, player: Player): BoardState | null => {
-    
     const newBoard: BoardState = board.map(row => [...row]);
     if(newBoard[row][col] != null){
         return null;

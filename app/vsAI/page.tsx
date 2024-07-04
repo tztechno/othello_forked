@@ -51,62 +51,71 @@ export default function VsAI() {
             //AI    
             if(!playerTurn){
                 if(newBoard ? checkPut(newBoard, AI) : checkPut(board, AI)){
-            
                     //おけるところを配列に
-                    const canPutAI = listCanPutCell(newBoard, AI);
+                    const canPutAI = listCanPutCell(newBoard ? newBoard : board, AI);
                     //仮置きしてプレイヤーが置けるところを配列に
                     const canPutPlayerPerAI = listCanPutPlayerPerAI(newBoard ? newBoard : board, canPutAI, AI);
                     //どれだけ試合が進んでるかによってAIのアルゴリズムを変える。
-                    const countPieces = countPiece(board);
+                    const countPieces = countPiece(newBoard ? newBoard : board);
                     if(countPieces.countBlack + countPieces.countWhite <= 48){
                         if(!isPlacedCorner(canPutPlayerPerAI)){
                             //角に置かれない一手があるとき
-                            //角に置かれてしまう一手を置けるところから削除する
-                            for(let i = 0; i < canPutPlayerPerAI.length; i++){
-                                for(let j = 0; j < canPutPlayerPerAI[i].length; j++){
-                                    if(canPutPlayerPerAI[i][j] === 0
-                                            || canPutPlayerPerAI[i][j] === 7
-                                            || canPutPlayerPerAI[i][j] === 56
-                                            || canPutPlayerPerAI[i][j] === 63){
-                                        canPutPlayerPerAI.splice(i, 1);
-                                        canPutAI.splice(i, 1);
-                                        i--;
-                                        break;
+                            //角に置く
+                            const cornerAIPut = new Array();
+                            for(let i = 0; i < canPutAI.length; i++){
+                                if(canPutAI[i] === 0
+                                    || canPutAI[i] === 7
+                                    || canPutAI[i] === 56
+                                    || canPutAI[i] === 63){
+                                    cornerAIPut.push(canPutAI[i]);
+                                }
+                            }
+                            if(cornerAIPut.length > 0){
+                                console.log(cornerAIPut);
+                                makeBoardAfterAI(cornerAIPut, newBoard ? newBoard : board);
+                            }else{
+                                //角に置かれてしまう一手を置けるところから削除する
+                                for(let i = 0; i < canPutPlayerPerAI.length; i++){
+                                    for(let j = 0; j < canPutPlayerPerAI[i].length; j++){
+                                        if(canPutPlayerPerAI[i][j] === 0
+                                                || canPutPlayerPerAI[i][j] === 7
+                                                || canPutPlayerPerAI[i][j] === 56
+                                                || canPutPlayerPerAI[i][j] === 63){
+                                            canPutPlayerPerAI.splice(i, 1);
+                                            canPutAI.splice(i, 1);
+                                            i--;
+                                            break;
+                                        }
                                     }
                                 }
-                            }
-                            //角前に置かないようにする
-                            const canPutPlayerPerAI2 = canPutPlayerPerAI.map(canPutPlayer => [...canPutPlayer]);
-                            const canPutAI2 = canPutAI.map(cell => cell);
-                            
-                            for(let i = 0; i < canPutAI2.length; i++){
-                                
-                                if(canPutAI2[i] === 9
-                                    || canPutAI2[i] === 14
-                                    || canPutAI2[i] === 49
-                                    || canPutAI2[i] === 54){
-                                    canPutPlayerPerAI2.splice(i, 1);
-                                    canPutAI2.splice(i, 1);
-                                    i--;
-                                    //break;
+                                //角前に置かないようにする
+                                const canPutPlayerPerAI2 = canPutPlayerPerAI.map(canPutPlayer => [...canPutPlayer]);
+                                const canPutAI2 = canPutAI.map(cell => cell);
+                                for(let i = 0; i < canPutAI2.length; i++){
+                                    if(canPutAI2[i] === 9
+                                        || canPutAI2[i] === 14
+                                        || canPutAI2[i] === 49
+                                        || canPutAI2[i] === 54){
+                                        canPutPlayerPerAI2.splice(i, 1);
+                                        canPutAI2.splice(i, 1);
+                                        i--;
+                                    }
                                 }
-                                
-                            }
-                            
-                            if(canPutAI2.length > 0){
-                                //最も相手の手数が少なくなる自分の手を配列に入れる
-                                const minOpponentAIPut = minOpponentPut(canPutPlayerPerAI2, canPutAI2);
-                                makeBoardAfterAI(minOpponentAIPut, newBoard);
-                            }else{
-                                //最も相手の手数が少なくなる自分の手を配列に入れる
-                                const minOpponentAIPut = minOpponentPut(canPutPlayerPerAI, canPutAI);
-                                makeBoardAfterAI(minOpponentAIPut, newBoard);
+                                if(canPutAI2.length > 0){
+                                    //最も相手の手数が少なくなる自分の手を配列に入れる
+                                    const minOpponentAIPut = minOpponentPut(canPutPlayerPerAI2, canPutAI2);
+                                    makeBoardAfterAI(minOpponentAIPut, newBoard ? newBoard : board);
+                                }else{
+                                    //最も相手の手数が少なくなる自分の手を配列に入れる
+                                    const minOpponentAIPut = minOpponentPut(canPutPlayerPerAI, canPutAI);
+                                    makeBoardAfterAI(minOpponentAIPut, newBoard ? newBoard : board);
+                                }
                             }
                             
                         }else{
                             //最も相手の手数が少なくなる自分の手を配列に入れる
                             const minOpponentAIPut = minOpponentPut(canPutPlayerPerAI, canPutAI);
-                            makeBoardAfterAI(minOpponentAIPut, newBoard);
+                            makeBoardAfterAI(minOpponentAIPut, newBoard ? newBoard : board);
                         }
                     }else{
                         //多く取るようにする
@@ -134,12 +143,11 @@ export default function VsAI() {
                                 maxAIPut.push(canPutAI[i]);
                             }
                         }
-                        makeBoardAfterAI(maxAIPut, newBoard);
-                        
+                        makeBoardAfterAI(maxAIPut, newBoard ? newBoard : board);
                     }
                 }else{
                     playerTurn = true;
-                    const winner = checkWinner(board);
+                    const winner = checkWinner(newBoard ? newBoard : board);
                     if(winner){
                         setWinner(winner);
                     }
@@ -147,10 +155,8 @@ export default function VsAI() {
             }
         }
     }    
-        
+    //AIの一手を反映させる関数
     const makeBoardAfterAI = (canPutAI: number[], newBoard: BoardState | null) => {
-        //最も相手の手数が少なくなる自分の手を配列に入れる
-        //const minOpponentAIPut = minOpponentPut(canPutPlayerPerAI, canPutAI);
         const AIPut = canPutAI[Math.trunc(Math.random() * canPutAI.length)];
         const putAIBoard = makeBoard(newBoard !== null ? newBoard : board, Math.trunc(AIPut % 8), Math.trunc(AIPut / 8), AI);
         if(putAIBoard){
@@ -163,7 +169,6 @@ export default function VsAI() {
                     setWinner(winner);
                 }
             }, 500);
-        }else{
         }
     }
         
