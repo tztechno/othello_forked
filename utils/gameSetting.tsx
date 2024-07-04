@@ -1,4 +1,3 @@
-import { useState } from 'react';
 
 //値に'black'か'white'かnullしかとらない型
 export type CellValue = 'black' | 'white' | null;
@@ -136,7 +135,6 @@ export const checkPut = (board: BoardState, player: Player): Boolean => {
     }
     return false;
 }
-
 
 /**
  * 特定のセルでおけるかどうかを判定する関数

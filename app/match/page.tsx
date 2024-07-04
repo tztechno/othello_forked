@@ -1,5 +1,4 @@
 "use client"
-//import Image from "next/image";
 import Board from '@/components/Board';
 import WinnerAnnouncePop from '@/components/WinnerAnnouncePop';
 import { Button } from '@/components/ui/button';

@@ -1,10 +1,6 @@
 "use client"
-//import Image from "next/image";
-import Board from '@/components/Board';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link'
-import { BoardState, initBoard } from "@/utils/gameSetting";
-import { useState } from 'react';
 
 export default function Home() {
     

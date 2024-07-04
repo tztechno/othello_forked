@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import { BoardState, Player, makeBoard, checkPutRowCol, Winner } from './gameSetting';
 
-//
+import { BoardState, Player, makeBoard, checkPutRowCol } from './gameSetting';
+
 
 
 //AIの置けるところごとに置いたときのプレイヤーの置けるところをリスト化する関数
@@ -17,8 +16,6 @@ export const listCanPutPlayerPerAI = (board: BoardState, canPutAI: number[], AI:
         }else{
             canPutPlayerPerAI.push([null]);
         }
-        
-        
     });
     return canPutPlayerPerAI;
 }

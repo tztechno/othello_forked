@@ -1,5 +1,4 @@
 "use client"
-//import Image from "next/image";
 import Board from '@/components/Board';
 import WinnerAnnouncePop from '@/components/WinnerAnnouncePop';
 import { Button } from '@/components/ui/button';
@@ -16,11 +15,6 @@ export default function VsAI() {
     const [message, setMessage] = useState<string>("");
     let playerTurn = true;
     const [firstTurn, setFirstTurn] = useState<Boolean>(true);
-    //let advance = true;
-    //const [advance, setAdvance] = useState<Boolean>(true);
-    //const [skip, setSkip] = useState<Boolean>(false);
-
-    //let skip = false;
 
     /**
      * セルを押した時に処理する関数
@@ -62,6 +56,7 @@ export default function VsAI() {
     const advanceOnClick = () => {
         AIMove(null);
         setFirstTurn(false);
+        setPlayingPlayer("AI");
     }
 
     //AIの関数
@@ -163,15 +158,16 @@ export default function VsAI() {
                 makeBoardAfterAI(maxAIPut, AIBoard);
             }
         }else{
-            playerTurn = true;
-            const winner = checkWinner(AIBoard);
-            if(winner){
-                setWinner(winner);
-            }
+            setTimeout(() => {
+                setPlayingPlayer('あなた');
+                playerTurn = true;
+                const winner = checkWinner(AIBoard);
+                if(winner){
+                    setWinner(winner);
+                }
+            }, 500);
         }
     }
-
-
 
     //AIの一手を反映させる関数
     const makeBoardAfterAI = (canPutAI: number[], newBoard: BoardState | null) => {
@@ -199,6 +195,8 @@ export default function VsAI() {
         setPlayer(initPlayer(true)); // 初期プレイヤーをセット
         setAI(initAI(player));
         setPlayer('black');
+        setFirstTurn(true);
+        setPlayingPlayer("あなた");
         playerTurn = true;
 
     };
